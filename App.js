@@ -5,13 +5,23 @@ import {
   View,
   StyleSheet
 } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import TopRatedMoviesScreen from './screens/TopRatedMovies';
+
+const Stack = createNativeStackNavigator();
 
 const App = () => {
 
   return (
-    <View style={styles.screen}>
-      <Text>Hello World!!!!</Text>
-    </View>
+    <>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name='Top Rated Movies' component={TopRatedMoviesScreen}/>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
 
   );
 };
