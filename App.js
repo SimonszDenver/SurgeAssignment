@@ -3,7 +3,8 @@ import React from 'react';
 import {
   Text,
   View,
-  StyleSheet
+  StyleSheet,
+  StatusBar
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -16,9 +17,26 @@ const App = () => {
 
   return (
     <>
+      <StatusBar
+        backgroundColor={'#0b253f'}
+        barStyle="light-content"/>
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name='Top Rated Movies' component={TopRatedMoviesScreen}/>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: '#0b253f',
+            },
+            headerTintColor: 'white',
+            contentStyle: {
+              backgroundColor: '#fafafa'
+            }
+          }}
+        >
+          <Stack.Screen name='TopRatedMovies'
+            component={TopRatedMoviesScreen}
+            options={{
+              title: "Top Rated Movies",
+            }} />
         </Stack.Navigator>
       </NavigationContainer>
     </>
