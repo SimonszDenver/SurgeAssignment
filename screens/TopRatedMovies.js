@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { FlatList, StyleSheet } from "react-native";
 import MovieTile from "../components/MovieTile";
 import { MOVIES } from "../data/dummy-data";
+import { MoviesContext } from '../store/movies-context';
 import { fetchMovies } from '../util/http';
 
 function renderMovieItems(itemData, index) {
@@ -9,18 +10,18 @@ function renderMovieItems(itemData, index) {
 }
 
 function TopRatedMoviesScreen () {
-    const [fetchedMovies, setFetchedMovies] = useState([]);
+    const moviesCtx = useContext(MoviesContext);
 
     useEffect(() => {
         async function getMovies(){
             const movies = await fetchMovies();
-            setFetchedMovies(movies);
+            moviesCtx.setMovies(movies);
         }
         getMovies();
     }, []);
 
     return <FlatList style={styles.screen}
-        data={fetchedMovies}
+        data={moviesCtx.movies}
         keyExtractor={(item) => item.id}
         renderItem={renderMovieItems}
     />
