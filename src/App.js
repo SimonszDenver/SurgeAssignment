@@ -1,8 +1,6 @@
 
 import React from 'react';
 import {
-  Text,
-  View,
   StyleSheet,
   StatusBar
 } from 'react-native';
@@ -47,12 +45,5 @@ const App = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-});
 
 export default App;

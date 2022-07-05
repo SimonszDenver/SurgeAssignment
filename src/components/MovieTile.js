@@ -1,4 +1,4 @@
-import { Pressable, View, Text, StyleSheet, Platform, Image } from 'react-native';
+import { View, Text, StyleSheet, Platform, Image } from 'react-native';
 import React from 'react';
 import Card from './UI/Card';
 

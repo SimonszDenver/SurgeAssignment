@@ -1,5 +1,5 @@
 import axios from "axios";
-import Movie from "../models/movies";
+import Movie from "../models/movie";
 
 const featchMoviesUrl = 'https://api.themoviedb.org/3/movie/top_rated?api_key=9618b5cf6ae9661f92fff553c697bed4&language=language&page=1';
 
