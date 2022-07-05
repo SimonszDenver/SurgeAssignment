@@ -1,17 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet } from "react-native";
 import MovieTile from "../components/MovieTile";
 import { MOVIES } from "../data/dummy-data";
-
-const IMAGE_URL = "https://image.tmdb.org/t/p/w440_and_h660_face";
+import { fetchMovies } from '../util/http';
 
 function renderMovieItems(itemData, index) {
     return <MovieTile title={itemData.item.title} movie={itemData.item} index={index}/>
 }
 
 function TopRatedMoviesScreen () {
+    const [fetchedMovies, setFetchedMovies] = useState([]);
+
+    useEffect(() => {
+        async function getMovies(){
+            const movies = await fetchMovies();
+            setFetchedMovies(movies);
+        }
+        getMovies();
+    }, []);
+
     return <FlatList style={styles.screen}
-        data={MOVIES}
+        data={fetchedMovies}
         keyExtractor={(item) => item.id}
         renderItem={renderMovieItems}
     />
