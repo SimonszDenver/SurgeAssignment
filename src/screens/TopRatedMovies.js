@@ -14,6 +14,7 @@ function TopRatedMoviesScreen() {
     const [isFetching, setIsFetching] = useState(true);
     const [error, setError] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
 
     const moviesCtx = useContext(MoviesContext);
 
@@ -21,19 +22,33 @@ function TopRatedMoviesScreen() {
         async function getMovies() {
             setIsFetching(true);
             try {
-                const movies = await fetchMovies();
+                const movies = await fetchMovies(currentPage);
                 moviesCtx.setMovies(movies);
-                console.log("Loading");
             } catch (error) {
                 setError('Could not fetch movies!!!');
             }
             setIsFetching(false);
         }
         getMovies();
+        setCurrentPage(1);
         if(refreshing){
             setRefreshing(false);
         }
     }, [error, refreshing]);
+
+    function onEndReachHandler() {
+        async function getMovies() {
+            try {
+                const movies = await fetchMovies(currentPage + 1);
+                const allMoviesList = [...moviesCtx.movies.values, ...movies.values];
+                moviesCtx.setMovies({values: allMoviesList, totalPage: movies.totalPage});
+            } catch (error) {
+                setError('Could not fetch movies!!!');
+            }
+        }
+        setCurrentPage(currentPage + 1);
+        getMovies();
+    }
 
     function onRefreshHandler() {
         setRefreshing(true);
@@ -52,11 +67,12 @@ function TopRatedMoviesScreen() {
     }
 
     return <FlatList style={styles.screen}
-        data={moviesCtx.movies}
+        data={moviesCtx.movies.values}
         keyExtractor={(item) => item.id}
         renderItem={renderMovieItems}
         refreshing={refreshing}
         onRefresh={onRefreshHandler}
+        onEndReached={onEndReachHandler}
     />
 }
 

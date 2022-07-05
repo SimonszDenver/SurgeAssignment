@@ -4,8 +4,9 @@ import Movie from "../models/movie";
 
 import { MOVIES_URL, API_KEY } from '@env';
 
-export async function fetchMovies() {
-    const response = await axios.get(MOVIES_URL + '/top_rated', { params: { api_key: API_KEY, page: 1 } });
+export async function fetchMovies(currentPage) {
+    console.log('Page : ',currentPage);
+    const response = await axios.get(MOVIES_URL + '/top_rated', { params: { api_key: API_KEY, page: currentPage } });
 
     const movies = [];
 
@@ -29,5 +30,5 @@ export async function fetchMovies() {
         );
     }
 
-    return movies;
+    return {values: movies, totalPage: response.data.total_pages};
 }
