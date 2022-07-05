@@ -13,6 +13,7 @@ function renderMovieItems(itemData, index) {
 function TopRatedMoviesScreen() {
     const [isFetching, setIsFetching] = useState(true);
     const [error, setError] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
 
     const moviesCtx = useContext(MoviesContext);
 
@@ -22,13 +23,21 @@ function TopRatedMoviesScreen() {
             try {
                 const movies = await fetchMovies();
                 moviesCtx.setMovies(movies);
+                console.log("Loading");
             } catch (error) {
                 setError('Could not fetch movies!!!');
             }
             setIsFetching(false);
         }
         getMovies();
-    }, [error]);
+        if(refreshing){
+            setRefreshing(false);
+        }
+    }, [error, refreshing]);
+
+    function onRefreshHandler() {
+        setRefreshing(true);
+    }
 
     function errorHandler() {
         setError(null);
@@ -46,6 +55,8 @@ function TopRatedMoviesScreen() {
         data={moviesCtx.movies}
         keyExtractor={(item) => item.id}
         renderItem={renderMovieItems}
+        refreshing={refreshing}
+        onRefresh={onRefreshHandler}
     />
 }
 
