@@ -4,7 +4,7 @@ This project aws generated with [React Native CLI](https://reactnative.dev/docs/
 
 This is a project which has build to display top rated movies from the Movie Database(https://www.themoviedb.org).
 
-![alt text](assets/screenshot.png) { width: 200px; }
+<img src="./assets/screenshot.png" alt="Screenshot" style="width:400px;"/>
 
 ## Project Structure
 
